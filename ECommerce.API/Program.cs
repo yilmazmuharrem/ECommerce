@@ -29,6 +29,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseCors(options =>
 {
     options.AllowAnyHeader().AllowAnyHeader().WithOrigins("http://localhost:3000");
