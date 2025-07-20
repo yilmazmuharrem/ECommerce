@@ -1,4 +1,5 @@
 using ECommerce.API.Data;
+using ECommerce.API.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,13 +21,14 @@ builder.Services.AddSwaggerGen();
 
 
 var app = builder.Build();
+app.UseMiddleware<ExceptionHandling>();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
