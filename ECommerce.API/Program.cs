@@ -34,7 +34,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseCors(options =>
 {
-    options.AllowAnyHeader().AllowAnyHeader().WithOrigins("http://localhost:3000");
+    options.AllowAnyHeader().AllowAnyHeader().AllowCredentials().WithOrigins("http://localhost:3000", "http://localhost:3001");
 });
 app.UseAuthorization();
 
