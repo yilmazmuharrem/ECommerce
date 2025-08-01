@@ -1,15 +1,23 @@
-import { CircularProgress, Divider, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
+import { CircularProgress, Divider, Grid, Stack, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { IProduct } from "../../model/IProduct";
 import request from "../../api/request";
 import NotFound from "../../errors/NotFound";
+import { LoadingButton } from "@mui/lab";
+import { AddShoppingCart } from "@mui/icons-material";
+import { useCartContext } from "../../context/CardContext";
+import { toast } from "react-toastify";
+import { currencyTRY } from "../../utils/fortmatCurrency";
 
 export default function ProductDetailsPage(){
 
     const {id }  = useParams<{id:string}>();
     const [product, setProduct] = useState<IProduct | null>(null)
+    const [isAdded, setIsAdded] = useState(false)
     const [loading, setLoading] = useState(true)
+    const {cart,setCart} = useCartContext()
+    const item = cart?.cartItems.find(i=>i.productId == product?.id)
     useEffect(()=>{
     id && request.Catalog.details(parseInt(id))
     .then(data=>setProduct(data)).
@@ -20,7 +28,15 @@ export default function ProductDetailsPage(){
 
     },[id])
 
-
+    function handleAddItem(id:number){
+        setIsAdded(true)
+        request.Card.addItem(id,1)
+        
+        .then(cart=>{setCart(cart)
+            toast.success("Sepetinize Ürün başarılı şekilde eklendi.")
+        })
+        .catch(error=>console.log(error)).finally(()=>setIsAdded(false))
+    }
     if(loading) return <CircularProgress></CircularProgress>
 
     if (!product) {
@@ -39,7 +55,7 @@ export default function ProductDetailsPage(){
 
 <Typography variant="h3"> {product.name}</Typography>
 <Divider sx={{mb:2}} ></Divider>
-<Typography variant="h4" color="secondary"> {(product.price / 10).toFixed(2)} ₺</Typography>
+<Typography variant="h4" color="secondary"> {currencyTRY.format (product.price)} ₺</Typography>
 <TableContainer>
     <Table>
         <TableBody>
@@ -62,9 +78,26 @@ export default function ProductDetailsPage(){
 
     </Table>
 </TableContainer>
+<Stack direction="row" spacing={2} sx={{mt:3}} alignItems="center">
+<LoadingButton
+ variant="outlined" 
+ loadingPosition="start"
+ startIcon={<AddShoppingCart></AddShoppingCart>}
+ loading={isAdded}
+ onClick={()=>handleAddItem(product.id)}
+ >
+Sepete Ekle
+
+
+
+</LoadingButton>
+{
+    item?.quantity!>0 && (
+        <Typography variant="body2" >Sepetinize {item?.quantity} adet eklendi.</Typography>
+    )
+}
+</Stack>
 </Grid>
-
-
 
 
      </Grid>

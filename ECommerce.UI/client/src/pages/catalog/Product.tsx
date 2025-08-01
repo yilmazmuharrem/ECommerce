@@ -7,6 +7,8 @@ import { useState } from "react";
 import requests from "../../api/request";
 import { LoadingButton } from "@mui/lab";
 import { useCartContext } from "../../context/CardContext";
+import { toast } from "react-toastify";
+import { currencyTRY } from "../../utils/fortmatCurrency";
 
 interface Props {
     product: IProduct
@@ -22,7 +24,9 @@ export default function Product({product}: Props) {
     setLoading(true);
 
     requests.Card.addItem(productId)
-      .then(cart => setCart(cart))
+    .then(cart=>{setCart(cart)
+                toast.success("Sepetinize Ürün başarılı şekilde eklendi.")
+            })
       .catch(error => console.log(error))
       .finally(() => setLoading(false));
   }
@@ -35,7 +39,7 @@ export default function Product({product}: Props) {
           {product.name}
         </Typography>
         <Typography variant="body2" color="secondary">
-          { (product.price / 100).toFixed(2) } ₺
+          { currencyTRY.format (product.price) } ₺
         </Typography>
       </CardContent>
       <CardActions>

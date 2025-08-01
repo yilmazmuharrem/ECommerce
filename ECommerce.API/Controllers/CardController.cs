@@ -57,7 +57,7 @@ namespace ECommerce.API.Controllers
             var result = await _context.SaveChangesAsync() > 0;
             if (result)
             {
-                return Ok();
+                return CreatedAtAction(nameof(GetCard), CardToDto(cart));
             }
             return BadRequest(new ProblemDetails { Title = "The product can not be removed from cart" });
         }

@@ -30,7 +30,7 @@ namespace ECommerce.API.Entity
             {
                 return;
             }
-            if (item.Quantity > quantity)
+            if (item.Quantity >= quantity)
             {
                 item.Quantity -= quantity;
             }
