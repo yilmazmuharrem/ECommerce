@@ -1,6 +1,6 @@
 
 import { Alert, AlertTitle, Button,  Container, List, ListItem, ListItemText } from "@mui/material";
-import request from "../../api/request";
+import request from "../../api/requests";
 import { useState } from "react";
 
 export default function ErrorPage(){

@@ -1,43 +1,37 @@
-
 import { useEffect, useState } from "react";
 import Header from "./Header";
 import { CircularProgress, Container, CssBaseline } from "@mui/material";
 import { Outlet } from "react-router";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import request from "../api/request";
-import { useCartContext } from "../context/CardContext";
+import requests from "../api/requests";
+import { useAppDispatch } from "../hooks/hooks";
+import { setCart } from "../features/cart/cartSlice";
 
-function App() {
+function App() {  
 
-  const { setCart} = useCartContext()
-  const [ loading,setLoading] = useState(true)
-useEffect(()=>{
-request.Card.get()
-.then(cart=>setCart(cart))
-.catch( error=> console.log(error))
-.finally(()=>setLoading(false))
-},[])
+  const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    requests.Card.get()
+      .then(cart => dispatch(setCart(cart)))
+      .catch(error => console.log(error))
+      .finally(() => setLoading(false));
+  }, []);
 
-if (loading) {
-  return <CircularProgress></CircularProgress>
-} 
-
+  if(loading) return <CircularProgress />;
 
   return (
     <>
-    <ToastContainer position="bottom-right" hideProgressBar theme="colored" ></ToastContainer>
-    <CssBaseline></CssBaseline>
-      <Header  />
+      <ToastContainer position="bottom-right" hideProgressBar theme="colored" />
+      <CssBaseline />
+      <Header />
       <Container>
-        
-         
-      <Outlet></Outlet>
-      
+        <Outlet />
       </Container>
-      
     </>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,7 +1,7 @@
 import { ShoppingCart } from "@mui/icons-material";
 import { AppBar, Badge, Box, Button,  IconButton,  Stack, Toolbar, Typography } from "@mui/material";
 import { Link, NavLink } from "react-router";
-import { useCartContext } from "../context/CardContext";
+import { useAppSelector } from "../hooks/hooks";
 const links = [
   {title:"Home",to:"/"},
   {title:"Catalog",to:"/catalog"},
@@ -22,7 +22,7 @@ const style = {
   }
 }
 export default function Header() {
-   const { cart } =  useCartContext();
+   const { cart } =  useAppSelector(state => state.cart)
     const itemCount = cart?.cartItems.reduce((total, item) => total + item.quantity, 0);
 
 
