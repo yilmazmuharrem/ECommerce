@@ -1,6 +1,7 @@
 ﻿using ECommerce.API.Data;
 using ECommerce.API.DTO;
 using ECommerce.API.Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace ECommerce.API.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<CardDto>> GetCard()
         {
             var card = await GetOrCreate()!;

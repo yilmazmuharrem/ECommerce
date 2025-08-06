@@ -68,8 +68,15 @@ const Card ={
     deleteItem:(productId:number,quantity=1)=>queries.delete(`card?productId=${productId}&quantity=${quantity}`)
 }
 
+
+const Account = {
+    login: (formdata:any) => queries.post("account/login",formdata),
+    register :(formdata:any) => queries.post("account/register",formdata),
+}
+
+
 const request  ={
-    Catalog,Errors,Card
+    Catalog,Errors,Card,Account
 }
 
 export default request
