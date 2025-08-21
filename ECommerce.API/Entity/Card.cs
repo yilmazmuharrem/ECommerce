@@ -40,6 +40,11 @@ namespace ECommerce.API.Entity
             }
             
         }
+
+        public double CalculateTotal()
+        {
+            return (double)CardItems.Sum(i => i.Product.Price * i.Quantity);
+        }
         public class CardItem
         {
             public int CardItemId { get; set; }

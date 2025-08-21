@@ -11,24 +11,33 @@ import NotFound from "../errors/NotFound";
 import ShoppingCardPage from "../features/cart/ShoppingCardPage";
 import LoginPage from "../features/account/loginPage";
 import RegisterPage from "../features/account/RegisterPage";
+import ShoppingCartPage from "../features/cart/ShoppingCardPage";
+import CheckoutPage from "../features/checkout/CheckoutPage";
+import AuthGuard from "./AuthGuard";
+import OrderList from "../features/orders/OrderList";
 
 export const router = createBrowserRouter([
     {
         path:"/",
         element:<App></App>,
         children:[
-            { path:"",element: <HomePage></HomePage>},
-            { path:"about",element: <AboutPages></AboutPages>},
-            { path:"contact",element: <ContactPage></ContactPage>},
-            { path:"catalog",element: <CatalogPage></CatalogPage>},
-            { path:"cart",element: <ShoppingCardPage></ShoppingCardPage>},
-            { path:"catalog/:id",element: <ProductDetailsPage></ProductDetailsPage>},
-            { path:"login",element: <LoginPage></LoginPage>},
-            { path:"register",element: <RegisterPage></RegisterPage>},
-            { path:"error",element: <ErrorPage></ErrorPage>},
-            { path:"server-error",element: <ServerError></ServerError>},
-            { path:"not-found",element: <NotFound></NotFound>},
-            { path:"*",element:<Navigate to="/not-found"></Navigate> }
+          { element: <AuthGuard />, children: [
+                    { path: "checkout", element: <CheckoutPage /> },
+                    { path: "orders", element: <OrderList /> },
+                ] 
+            },
+            { path: "", element: <HomePage /> },
+            { path: "about", element: <AboutPages /> },
+            { path: "contact", element: <ContactPage /> },
+            { path: "catalog", element: <CatalogPage /> },
+            { path: "cart", element: <ShoppingCartPage /> },
+            { path: "catalog/:id", element: <ProductDetailsPage /> },
+            { path: "login", element: <LoginPage /> },
+            { path: "register", element: <RegisterPage /> },
+            { path: "error", element: <ErrorPage /> },
+            { path: "server-error", element: <ServerError /> },
+            { path: "not-found", element: <NotFound /> },
+            { path : "*", element: <Navigate to="/not-found" />}
         ]
     }
 ])

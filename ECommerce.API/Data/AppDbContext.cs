@@ -13,6 +13,7 @@ namespace ECommerce.API.Data
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<Card> Cards { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
