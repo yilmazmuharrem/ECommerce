@@ -359,6 +359,10 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
+# Ortam appsettings'lerini ignore et
+**/appsettings.*.json
+!**/appsettings.json   # temel dosyayı sakla
+
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 # appsettings dosyalarını ignore et
