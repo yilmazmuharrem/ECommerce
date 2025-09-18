@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# appsettings dosyalarını ignore et
+Presentation/ECommerce.API/appsettings.Development.json
+Presentation/ECommerce.API/appsettings.Production.json
