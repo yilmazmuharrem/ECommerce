@@ -1,5 +1,5 @@
 using ECommerce.Persistence;
-
+using ECommerce.Application;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,6 +16,8 @@ builder.Configuration.SetBasePath(env.ContentRootPath)
 
 
 builder.Services.AddPersistance(builder.Configuration);
+builder.Services.AddApplication();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

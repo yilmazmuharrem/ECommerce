@@ -1,0 +1,10 @@
+﻿namespace ECommerce.Application.Features.Products.Queries.GetAllProducts
+{
+    public class GetAllProductsQueryResponse
+    {
+        public string Title { get; set; }
+        public string Descriptipon { get; set; }
+        public decimal Price { get; set; }
+        public decimal Discount { get; set; }
+    }
+}
