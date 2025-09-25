@@ -1,6 +1,6 @@
 ﻿namespace ECommerce.Application.Interfaces.AutoMapper
 {
-    public interface IMapper
+    public interface IOurMapper
     {
         TDestination Map<TDestination, TSource>(TSource source, string? ignore = null);
 
