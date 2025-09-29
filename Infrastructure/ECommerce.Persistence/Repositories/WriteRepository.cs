@@ -39,6 +39,11 @@ namespace ECommerce.Persistence.Repositories
         }
 
 
+        public async Task HardDeleteRangeAsync(IList<T> entities)
+        {
+            await Task.Run(() => _entities.RemoveRange(entities));
+        }
+
 
     }
 }
