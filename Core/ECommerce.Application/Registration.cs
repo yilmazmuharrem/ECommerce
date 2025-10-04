@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ECommerce.Application.Exceptions;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace ECommerce.Application
@@ -7,6 +8,7 @@ namespace ECommerce.Application
     {
         public static void AddApplication(this IServiceCollection services)
         {
+            services.AddTransient<ExceptionMiddleware>();
             var assembly = Assembly.GetExecutingAssembly();
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
 

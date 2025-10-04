@@ -1,6 +1,7 @@
 using ECommerce.Persistence;
 using ECommerce.Application;
 using ECommerce.Mapper;
+using ECommerce.Application.Exceptions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -31,6 +32,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthorization();
 
+app.ConfigureExceptionHandlingMiddleware();
 
 app.MapControllers();
 
