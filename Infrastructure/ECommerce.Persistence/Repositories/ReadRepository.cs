@@ -47,9 +47,7 @@ namespace ECommerce.Persistence.Repositories
             if (!enableTracking) queryable = queryable.AsNoTracking();
             if (include is not null) queryable = include(queryable);
             
-            //queryable.Where(predicate);
-
-            return await queryable.FirstOrDefaultAsync();
+            return await queryable.Where(predicate).FirstOrDefaultAsync();
         }
 
         public async Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null)

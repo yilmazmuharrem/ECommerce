@@ -31,7 +31,6 @@ namespace ECommerce.Application.Features.Products.Queries.GetAllProducts
                 item.Price -= (item.Price * item.Discount / 100);
             }
 
-            throw new Exception("HATAAAA");
             return maps;
         }
     }

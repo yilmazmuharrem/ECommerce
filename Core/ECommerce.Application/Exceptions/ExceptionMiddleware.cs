@@ -37,7 +37,6 @@ namespace ECommerce.Application.Exceptions
             List<string> errors = new()
             {
                  $"Hata Mesajı : { ex.Message}",
-                 $"Mesaj Açıklaması : { ex.InnerException?.ToString()}",
             };
 
             return context.Response.WriteAsync(new ExceptionModel
