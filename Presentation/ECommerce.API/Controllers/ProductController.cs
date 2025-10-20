@@ -22,7 +22,6 @@ namespace ECommerce.API.Controllers
         {
             var response = await mediator.Send(new GetAllProductsQueryRequest());
 
-
             return Ok(response);
         }
 

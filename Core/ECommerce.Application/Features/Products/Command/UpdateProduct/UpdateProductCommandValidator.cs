@@ -1,11 +1,13 @@
 ﻿using FluentValidation;
 
-namespace ECommerce.Application.Features.Products.Command.CreateProduct
+namespace ECommerce.Application.Features.Products.Command.UpdateProduct
 {
-    public class CreateProductCommandValidator : AbstractValidator<CreateProductCommandRequest>
+    public class UpdateProductCommandValidator : AbstractValidator<UpdateProductCommandRequest>
     {
-        public CreateProductCommandValidator()
+        public UpdateProductCommandValidator()
         {
+            RuleFor(x => x.Id).NotEmpty().GreaterThan(0);
+
             RuleFor(x => x.Title).NotEmpty().WithName("Başlık");
 
             RuleFor(x => x.Descriptipon).NotEmpty().WithName("Açıklama");
@@ -17,7 +19,6 @@ namespace ECommerce.Application.Features.Products.Command.CreateProduct
             RuleFor(x => x.Discount).GreaterThanOrEqualTo(0).WithName("İndirim");
 
             RuleFor(x => x.CategoryIds).NotEmpty().Must(x => x.Any()).WithName("Kategoriler");
-
         }
     }
 }

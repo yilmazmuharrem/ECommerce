@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Application.Features.Products.Command.UpdateProduct
 {
-    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommandRequest>
+    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommandRequest,Unit>
     {
         public IUnitOfWork _unitOfWork { get; }
         public IOurMapper _mapper { get; }
@@ -22,7 +22,7 @@ namespace ECommerce.Application.Features.Products.Command.UpdateProduct
         }
 
 
-        public async Task Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
         {
             var product = await _unitOfWork.GetReadRepository<Product>().GetAsync(x => x.Id == request.Id && !x.IsDeleted);
             var map = _mapper.Map<Product, UpdateProductCommandRequest>(request);
@@ -40,9 +40,8 @@ namespace ECommerce.Application.Features.Products.Command.UpdateProduct
 
             await _unitOfWork.GetWriteRepository<Product>().UpdateAsync(product);
             await _unitOfWork.SaveAsync();
+            return Unit.Value;
 
-
-            throw new NotImplementedException();
         }
     }
 }
