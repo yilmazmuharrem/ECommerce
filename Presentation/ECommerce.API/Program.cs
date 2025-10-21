@@ -1,5 +1,6 @@
 using ECommerce.Persistence;
 using ECommerce.Application;
+using ECommerce.Infrastructure;
 using ECommerce.Mapper;
 using ECommerce.Application.Exceptions;
 var builder = WebApplication.CreateBuilder(args);
@@ -20,7 +21,7 @@ builder.Configuration.SetBasePath(env.ContentRootPath)
 builder.Services.AddPersistance(builder.Configuration);
 builder.Services.AddApplication();
 builder.Services.AddCustomMapper();
-
+builder.Services.AddInfrastructure(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
