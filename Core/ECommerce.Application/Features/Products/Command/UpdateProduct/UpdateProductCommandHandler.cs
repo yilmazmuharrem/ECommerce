@@ -1,7 +1,9 @@
-﻿using ECommerce.Application.Interfaces.AutoMapper;
+﻿using ECommerce.Application.Bases;
+using ECommerce.Application.Interfaces.AutoMapper;
 using ECommerce.Application.Interfaces.UnitOfWorks;
 using ECommerce.Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +12,12 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Application.Features.Products.Command.UpdateProduct
 {
-    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommandRequest,Unit>
+    public class UpdateProductCommandHandler :BaseHandler, IRequestHandler<UpdateProductCommandRequest,Unit>
     {
-        public IUnitOfWork _unitOfWork { get; }
-        public IOurMapper _mapper { get; }
-
-        public UpdateProductCommandHandler(IUnitOfWork unitOfWork, IOurMapper mapper)
+      
+        public UpdateProductCommandHandler(IOurMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor) : base(mapper, unitOfWork, httpContextAccessor)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
+       
         }
 
 

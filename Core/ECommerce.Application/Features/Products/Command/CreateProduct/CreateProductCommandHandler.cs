@@ -1,19 +1,24 @@
-﻿using ECommerce.Application.Features.Products.Exceptions;
+﻿using ECommerce.Application.Bases;
+using ECommerce.Application.Features.Products.Exceptions;
 using ECommerce.Application.Features.Products.Rules;
+using ECommerce.Application.Interfaces.AutoMapper;
 using ECommerce.Application.Interfaces.UnitOfWorks;
 using ECommerce.Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace ECommerce.Application.Features.Products.Command.CreateProduct
 {
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandRequest, Unit>
+    public class CreateProductCommandHandler :BaseHandler, IRequestHandler<CreateProductCommandRequest, Unit>
     {
-        public IUnitOfWork _unitOfWork;
+        //public IUnitOfWork _unitOfWork;
         public ProductRules _productRules;
 
-        public CreateProductCommandHandler(IUnitOfWork unitOfWork, ProductRules productRules)
+
+     
+        public CreateProductCommandHandler(ProductRules productRules, IOurMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor) : base(mapper, unitOfWork, httpContextAccessor)
         {
-            _unitOfWork = unitOfWork;
+           // _unitOfWork = unitOfWork;
             _productRules = productRules;
         }
 

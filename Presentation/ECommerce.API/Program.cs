@@ -14,6 +14,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 var env = builder.Environment;
 builder.Configuration.SetBasePath(env.ContentRootPath)
     .AddJsonFile("appsettings.json", optional: false)
@@ -24,7 +27,7 @@ builder.Services.AddPersistance(builder.Configuration);
 builder.Services.AddApplication();
 builder.Services.AddCustomMapper();
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddSwaggerGen(c=>
+builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "ECommerce API", Version = "v1", Description = "Ecommerce API swagger client" });
     c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
@@ -36,7 +39,7 @@ builder.Services.AddSwaggerGen(c=>
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
         Description = "'Bearer' yazip bosluk biraktiktan sonra Token'i girebilirsiniz. \r\n\r\n örneğin Bearer eyJhasdsadasdasdadsa"
     });
-    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement() 
+    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement()
     {
         {
             new OpenApiSecurityScheme
