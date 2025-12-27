@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace ECommerce.Infrastructure.Tokens
@@ -34,17 +35,21 @@ namespace ECommerce.Infrastructure.Tokens
             }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenSettings.Secret));
-            var token = new JwtSecurityToken(issuer: _tokenSettings.Issuer, audience: _tokenSettings.Audience, expires: DateTime.Now.AddMinutes(_tokenSettings.TokenValidityInMinutes),claims:claims,signingCredentials:new SigningCredentials(key,SecurityAlgorithms.HmacSha256));
+            var token = new JwtSecurityToken(issuer: _tokenSettings.Issuer, audience: _tokenSettings.Audience, expires: DateTime.Now.AddMinutes(_tokenSettings.TokenValidityInMinutes), claims: claims, signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
 
 
             await _userManager.AddClaimsAsync(user, claims);
             return token;
-            
+
         }
 
         public string GenerateRefreshToken()
         {
-            throw new NotImplementedException();
+            var randomNumber = new Byte[64];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);
+
         }
 
         public ClaimsPrincipal? GetPrincipalFromExpiredToken()
