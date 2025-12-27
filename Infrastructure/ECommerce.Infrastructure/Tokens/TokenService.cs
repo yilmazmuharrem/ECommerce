@@ -40,7 +40,7 @@ namespace ECommerce.Infrastructure.Tokens
             var token = new JwtSecurityToken(
                 issuer: _tokenSettings.Issuer,
                 audience: _tokenSettings.Audience,
-                expires: DateTime.Now.AddMinutes(_tokenSettings.TokenValidityInMinutes), 
+                expires: DateTime.Now.AddMinutes(_tokenSettings.TokenValidityInMinutes),
                 claims: claims,
                 signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
 
@@ -59,9 +59,29 @@ namespace ECommerce.Infrastructure.Tokens
 
         }
 
-        public ClaimsPrincipal? GetPrincipalFromExpiredToken()
+        public ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token)
         {
-            throw new NotImplementedException();
+            TokenValidationParameters validationParameters = new TokenValidationParameters()
+            {
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenSettings.Secret))
+            };
+
+            JwtSecurityTokenHandler tokenHandler = new();
+            var principal = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken securityToken);
+
+
+            if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCulture))
+            {
+                throw new SecurityTokenException("Token bulunamadı");
+            }
+
+
+            return principal;
+            
         }
     }
 }
