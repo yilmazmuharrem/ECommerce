@@ -16,7 +16,7 @@ namespace ECommerce.Infrastructure.Tokens
         private readonly TokenSettings _tokenSettings;
         public TokenService(IOptions<TokenSettings> options, UserManager<User> userManager)
         {
-            userManager = userManager;
+            _userManager = userManager;
             _tokenSettings = options.Value;
         }
 

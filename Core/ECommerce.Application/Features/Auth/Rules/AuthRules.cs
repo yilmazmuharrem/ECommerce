@@ -14,5 +14,43 @@ namespace ECommerce.Application.Features.Auth.Rules
             }
             return Task.CompletedTask;
         }
+
+
+        public Task EmailOrPasswordShouldNotBeInvalid(User? user, bool checkpassword)
+        {
+            if (user is null || !checkpassword)
+            {
+                throw new EmailOrPasswordShouldNotBeInvalidException();
+            }
+            return Task.CompletedTask;
+
+        }
+
+
+
+        public Task RefreshTokenShouldNotBeExpired(DateTime? expiryDate)
+        {
+
+            if (expiryDate <= DateTime.Now)
+            {
+                throw new RefreshTokenShouldNotBeExpiredException();
+            }
+
+            return Task.CompletedTask;
+
+        }
+
+
+        public Task EmailAdressShouldBeValid(User? user)
+        {
+
+            if (user is null)
+            {
+                throw new EmailAdressShouldBeValidException();
+            }
+
+            return Task.CompletedTask;
+
+        }
     }
 }

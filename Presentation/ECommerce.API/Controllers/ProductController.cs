@@ -3,6 +3,7 @@ using ECommerce.Application.Features.Products.Command.DeleteProduct;
 using ECommerce.Application.Features.Products.Command.UpdateProduct;
 using ECommerce.Application.Features.Products.Queries.GetAllProducts;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace ECommerce.API.Controllers
 {
@@ -16,8 +17,8 @@ namespace ECommerce.API.Controllers
             this.mediator = mediator;
         }
 
-
         [HttpGet]   
+        [Authorize]
         public async Task<IActionResult> GetAllProducts()
         {
             var response = await mediator.Send(new GetAllProductsQueryRequest());
