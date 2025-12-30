@@ -11,46 +11,26 @@ namespace ECommerce.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class BrandController : ControllerBase
     {
         private readonly IMediator mediator;
-        public ProductController(IMediator mediator)
+        public BrandController(IMediator mediator)
         {
             this.mediator = mediator;
         }
 
-        [HttpGet]   
-        [Authorize]
-        public async Task<IActionResult> GetAllProducts()
+        [HttpPost]
+        public async Task<IActionResult> CreateBrand(CreateBrandCommandRequest request)
         {
-            var response = await mediator.Send(new GetAllProductsQueryRequest());
+            await mediator.Send(request);
+            return Ok();
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllBrands()
+        {
+           var response = await mediator.Send(new GetAllBrandsQueryRequest());
             return Ok(response);
-        }
-
-
-
-        [HttpPost]
-        public async Task<IActionResult> CreateProducts(CreateProductCommandRequest request)
-        {
-             await mediator.Send(request);
-            return Ok();
-        }
-
-
-        [HttpPost]
-        public async Task<IActionResult> UpdateProducts(UpdateProductCommandRequest request)
-        {
-            await mediator.Send(request);
-            return Ok();
-        }
-
-
-        [HttpPost]
-        public async Task<IActionResult> DeleteProducts(DeleteProductCommandRequest request)
-        {
-            await mediator.Send(request);
-            return Ok();
         }
     }
 }

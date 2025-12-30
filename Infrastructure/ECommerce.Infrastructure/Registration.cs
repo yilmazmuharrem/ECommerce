@@ -1,4 +1,6 @@
-﻿using ECommerce.Application.Interfaces.Tokens;
+﻿using ECommerce.Application.Interfaces.RedisCache;
+using ECommerce.Application.Interfaces.Tokens;
+using ECommerce.Infrastructure.RedisCache;
 using ECommerce.Infrastructure.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +17,8 @@ namespace ECommerce.Mapper
             //Microsoft.Extensions.Options.ConfigurationExtensions Nuget paketi indirerek appsettings deki yapıyı classıma çevirdim.
             services.Configure<TokenSettings>(configuration.GetSection("JWT"));
             services.AddTransient<ITokenService, TokenService>();
+            services.Configure<RedisCacheSettings>(configuration.GetSection("RedisCacheSettings"));
+            services.AddTransient<IRedisCacheService, RedisCacheService>();
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -35,14 +39,12 @@ namespace ECommerce.Mapper
                 };
             });
 
+            services.AddStackExchangeRedisCache(opt =>
+            {
+                opt.Configuration = configuration["RedisCacheSettings:ConnectionString"];
+                opt.InstanceName = configuration["RedisCacheSettings:InstanceName"];
+            });
         
         }
     }
 }
-
-
-//ValidateIssuer = false,
-//                    ValidateAudience = false,
-//                    ValidateIssuerSigningKey = true,
-//                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"])),
-//                    ValidateLifetime = false
