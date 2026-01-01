@@ -13,13 +13,14 @@
 
 - **.NET / ASP.NET Core Web API**
 - **Onion Architecture**
+- **CQRS (Command Query Responsibility Segregation)**
+- **MediatR**
 - **Entity Framework Core**
 - **Redis**
 - **AutoMapper**
-- **Fluent Validation**
+- **FluentValidation**
 - **Repository Pattern**
 - **Unit of Work Pattern**
 
----
 
 
