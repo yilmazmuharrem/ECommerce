@@ -19,16 +19,26 @@ namespace ECommerce.API.Controllers
             this.mediator = mediator;
         }
 
+
+        // Bu endpoint role çalışmalarına yönelik test amaclı yazılmıştır.
+
         [HttpGet]   
-        [Authorize]
-        public async Task<IActionResult> GetAllProducts()
+        [Authorize(Roles ="Admin")]
+        public async Task<IActionResult> GetAllProductsAdmin()
         {
             var response = await mediator.Send(new GetAllProductsQueryRequest());
 
             return Ok(response);
         }
 
+        [HttpGet]
+        [Authorize(Roles = "user,Admin")]
+        public async Task<IActionResult> GetAllProductsUser()
+        {
+            var response = await mediator.Send(new GetAllProductsQueryRequest());
 
+            return Ok(response);
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateProducts(CreateProductCommandRequest request)
