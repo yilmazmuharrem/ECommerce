@@ -35,6 +35,8 @@ namespace ECommerce.API.Controllers
         [Authorize(Roles = "user,Admin")]
         public async Task<IActionResult> GetAllProductsUser()
         {
+
+            var x = User;
             var response = await mediator.Send(new GetAllProductsQueryRequest());
 
             return Ok(response);
